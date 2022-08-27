@@ -1,4 +1,4 @@
-package com.example.plugins
+package dev.juanrincon.plugins
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource

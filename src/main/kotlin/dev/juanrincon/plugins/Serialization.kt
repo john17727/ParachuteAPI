@@ -1,4 +1,4 @@
-package com.example.plugins
+package dev.juanrincon.plugins
 
 import io.ktor.serialization.gson.*
 import io.ktor.server.plugins.contentnegotiation.*
