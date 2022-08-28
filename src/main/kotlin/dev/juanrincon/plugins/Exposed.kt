@@ -19,7 +19,9 @@ fun Application.configureExposed() {
             ResourceTable,
             AreaTable,
             ProjectStatusTable,
-            ProjectTable
+            ProjectTable,
+            PriorityLevelTable,
+            TaskStatusTable
         )
     }
 }
