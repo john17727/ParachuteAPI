@@ -2,15 +2,28 @@ package dev.juanrincon.plugins
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
+import dev.juanrincon.domain.daos.AreaTable
+import dev.juanrincon.domain.daos.ProjectStatusTable
+import dev.juanrincon.domain.daos.ResourceTable
+import dev.juanrincon.domain.daos.UserTable
 import io.ktor.server.application.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun Application.configureExposed() {
     Database.connect(hikari(environment))
-    TODO("Add creation of tables here")
+
+    transaction {
+        SchemaUtils.create(
+            UserTable,
+            ResourceTable,
+            AreaTable,
+            ProjectStatusTable,
+        )
+    }
 }
 
 private fun hikari(environment: ApplicationEnvironment) = HikariDataSource(HikariConfig().apply {
