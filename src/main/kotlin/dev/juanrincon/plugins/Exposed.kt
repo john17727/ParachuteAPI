@@ -24,7 +24,8 @@ fun Application.configureExposed() {
             TaskStatusTable,
             TaskTable,
             NoteTypeTable,
-            NoteTable
+            NoteTable,
+            ArchivedNoteTable
         )
     }
 }
