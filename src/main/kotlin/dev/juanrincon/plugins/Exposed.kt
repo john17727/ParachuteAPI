@@ -2,10 +2,7 @@ package dev.juanrincon.plugins
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import dev.juanrincon.domain.daos.AreaTable
-import dev.juanrincon.domain.daos.ProjectStatusTable
-import dev.juanrincon.domain.daos.ResourceTable
-import dev.juanrincon.domain.daos.UserTable
+import dev.juanrincon.domain.daos.*
 import io.ktor.server.application.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -22,6 +19,7 @@ fun Application.configureExposed() {
             ResourceTable,
             AreaTable,
             ProjectStatusTable,
+            ProjectTable
         )
     }
 }
