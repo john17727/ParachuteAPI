@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  parachuteapi:
+    build: ./
+    container_name: "parachute_api"
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      DB_USER: "john17727"
+      DB_PASSWORD: "Mustang1772714"
+      JWT_SECRET: "7312790112781895945497873261882970215409383338722182451203244443"
+    depends_on:
+      - mariadb
+  mariadb:
+    image: mariadb
+    container_name: "mariadb"
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: "intmyPassword=1772714;"
+      MARIADB_USER: "john17727"
+      MARIADB_PASSWORD: "Mustang1772714"
+      MARIADB_DATABASE: "parachute"
+#    volumes:
+      # - /test/mariadb:/var/lib/mysql:z
+#      - /Users/juanrincon/Documents/ParachuteTest/mariadb:/var/lib/mysql

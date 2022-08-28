@@ -4,8 +4,8 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 
 object NoteTable: IntIdTable("notes") {
     val title = varchar("title", 256)
-    val markdown = varchar("markdown", Int.MAX_VALUE)
-    val html = varchar("html", Int.MAX_VALUE)
+    val markdown = text("markdown")
+    val html = text("html")
     val typeId = reference("type_id", NoteTypeTable)
     val favorite = bool("favorite")
     val fleeting = bool("fleeting")

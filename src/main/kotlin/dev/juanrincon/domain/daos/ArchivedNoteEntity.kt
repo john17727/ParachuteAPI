@@ -14,6 +14,6 @@ class ArchivedNoteEntity(id: EntityID<Int>): IntEntity(id) {
     var fleeting by ArchivedNoteTable.fleeting
     var project by ProjectEntity referencedOn ArchivedNoteTable.projectId
     var resource by ResourceEntity referencedOn ArchivedNoteTable.resourceId
-    var area by AreaEntity referencedOn ResourceTable.areaId
-    var user by UserEntity referencedOn ResourceTable.userId
+    var area by AreaEntity referencedOn ArchivedNoteTable.areaId
+    var user by UserEntity referencedOn ArchivedNoteTable.userId
 }
