@@ -22,7 +22,9 @@ fun Application.configureExposed() {
             ProjectTable,
             PriorityLevelTable,
             TaskStatusTable,
-            TaskTable
+            TaskTable,
+            NoteTypeTable,
+            NoteTable
         )
     }
 }
