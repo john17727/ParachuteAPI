@@ -5,8 +5,8 @@ import org.jetbrains.exposed.sql.javatime.datetime
 
 object TaskTable: IntIdTable("tasks") {
     val title = varchar("title", 256)
-    val markdown = varchar("markdown", Int.MAX_VALUE)
-    val html = varchar("html", Int.MAX_VALUE)
+    val markdown = text("markdown")
+    val html = text("html")
     val statusId = reference("status_id", TaskStatusTable)
     val dueDate = datetime("due_date")
     val priorityId = reference("priority_id", PriorityLevelTable)
