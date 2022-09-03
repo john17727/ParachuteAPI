@@ -2,7 +2,6 @@ package dev.juanrincon.data.services
 
 import dev.juanrincon.domain.interfaces.UserDatabase
 import dev.juanrincon.domain.models.User
-import dev.juanrincon.domain.models.request.LoginRequest
 import dev.juanrincon.domain.models.request.RegisterRequest
 import dev.juanrincon.domain.models.utilities.ServiceResponse
 import io.ktor.http.*
@@ -14,7 +13,7 @@ class UserService(private val repository: UserDatabase) {
             return ServiceResponse.Failed(HttpStatusCode.BadRequest, "Missing Fields")
         }
 
-        val userExists = repository.checkIfUserExists(request.email)
+        val userExists = repository.checkUserExists(request.email)
         return if (userExists) {
             ServiceResponse.Failed(HttpStatusCode.Conflict, "User with this email already exists")
         } else {
@@ -22,14 +21,14 @@ class UserService(private val repository: UserDatabase) {
         }
     }
 
-    suspend fun loginUser(email: String, password: String) : ServiceResponse<Int> {
+    suspend fun loginUser(email: String, password: String) : ServiceResponse<User> {
         if (email.isEmpty() || password.isEmpty()) {
             return ServiceResponse.Failed(HttpStatusCode.BadRequest, "Missing Fields")
         }
 
         val passwordsMatch = repository.checkPasswordMatches(email, password)
         return if (passwordsMatch) {
-            ServiceResponse.Success(repository.getUserId(email))
+            ServiceResponse.Success(repository.get(email))
         } else {
             ServiceResponse.Failed(
                 HttpStatusCode.BadRequest,

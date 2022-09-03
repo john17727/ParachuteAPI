@@ -7,7 +7,7 @@ import dev.juanrincon.domain.models.User
 import dev.juanrincon.plugins.dbQuery
 
 class UserRepository: UserDatabase {
-    override suspend fun checkIfUserExists(email: String) = dbQuery {
+    override suspend fun checkUserExists(email: String) = dbQuery {
         !UserEntity.find { UserTable.email eq email }.empty()
     }
 
@@ -20,8 +20,8 @@ class UserRepository: UserDatabase {
         }
     }
 
-    override suspend fun getUserId(email: String) = dbQuery {
-        UserEntity.find { UserTable.email eq email }.first().id.value
+    override suspend fun get(email: String) = dbQuery {
+        UserEntity.find { UserTable.email eq email }.first().toModel()
     }
 
     override suspend fun get(id: Int) = dbQuery {
