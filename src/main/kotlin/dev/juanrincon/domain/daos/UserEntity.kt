@@ -8,5 +8,7 @@ class UserEntity(id: EntityID<Int>): IntEntity(id) {
     companion object : IntEntityClass<UserEntity>(UserTable)
     var firstName by UserTable.firstName
     var lastName by UserTable.lastName
+    var imageUrl by UserTable.imageUrl
     var email by UserTable.email
+    var password by UserTable.password
 }
