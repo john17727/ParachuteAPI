@@ -10,6 +10,7 @@ val hikaricpVersion: String by project
 plugins {
     application
     kotlin("jvm") version "1.7.10"
+    kotlin("plugin.serialization") version "1.7.10"
     id("io.ktor.plugin") version "2.1.0"
 }
 
@@ -28,10 +29,15 @@ repositories {
 
 dependencies {
     implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
+
     implementation("io.ktor:ktor-server-auth-jvm:$ktorVersion")
     implementation("io.ktor:ktor-server-auth-jwt-jvm:$ktorVersion")
+    
+    implementation("io.ktor:ktor-server-resources:$ktorVersion")
+
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktorVersion")
     implementation("io.ktor:ktor-serialization-gson-jvm:$ktorVersion")
+
     implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
 
