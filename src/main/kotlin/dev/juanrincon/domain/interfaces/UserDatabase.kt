@@ -7,4 +7,6 @@ interface UserDatabase: Repository<User> {
     suspend fun checkIfUserExists(email: String): Boolean
 
     suspend fun checkPasswordMatches(email: String, password: String): Boolean
+
+    suspend fun getUserId(email: String): Int
 }

@@ -20,6 +20,10 @@ class UserRepository: UserDatabase {
         }
     }
 
+    override suspend fun getUserId(email: String) = dbQuery {
+        UserEntity.find { UserTable.email eq email }.first().id.value
+    }
+
     override suspend fun get(id: Int) = dbQuery {
         UserEntity.findById(id)?.toModel()
     }

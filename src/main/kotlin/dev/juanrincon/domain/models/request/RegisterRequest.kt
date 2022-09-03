@@ -7,7 +7,7 @@ data class RegisterRequest(
     val firstName: String?,
     val lastName: String?,
     val email: String,
-    val password: String,
+    var password: String,
 ) : DomainMapper<User> {
     override fun toModel() = User(
         -1,

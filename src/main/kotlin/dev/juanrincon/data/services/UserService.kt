@@ -2,23 +2,39 @@ package dev.juanrincon.data.services
 
 import dev.juanrincon.domain.interfaces.UserDatabase
 import dev.juanrincon.domain.models.User
+import dev.juanrincon.domain.models.request.LoginRequest
 import dev.juanrincon.domain.models.request.RegisterRequest
 import dev.juanrincon.domain.models.utilities.ServiceResponse
 import io.ktor.http.*
 
-class UserService(val repository: UserDatabase) {
+class UserService(private val repository: UserDatabase) {
 
-    suspend fun registerUser(user: RegisterRequest) : ServiceResponse<User> {
-        if (user.email.isEmpty() || user.password.isEmpty()) return ServiceResponse.Failed(
-            HttpStatusCode.BadRequest, "Missing Fields"
-        )
+    suspend fun registerUser(request: RegisterRequest) : ServiceResponse<User> {
+        if (request.email.isEmpty() || request.password.isEmpty()) {
+            return ServiceResponse.Failed(HttpStatusCode.BadRequest, "Missing Fields")
+        }
 
-        val userExists = repository.checkIfUserExists(user.email)
+        val userExists = repository.checkIfUserExists(request.email)
         return if (userExists) {
             ServiceResponse.Failed(HttpStatusCode.Conflict, "User with this email already exists")
         } else {
+            ServiceResponse.Success(repository.add(request.toModel()), HttpStatusCode.Created)
+        }
+    }
 
-            ServiceResponse.Success(repository.add(user.toModel()), HttpStatusCode.Created)
+    suspend fun loginUser(email: String, password: String) : ServiceResponse<Int> {
+        if (email.isEmpty() || password.isEmpty()) {
+            return ServiceResponse.Failed(HttpStatusCode.BadRequest, "Missing Fields")
+        }
+
+        val passwordsMatch = repository.checkPasswordMatches(email, password)
+        return if (passwordsMatch) {
+            ServiceResponse.Success(repository.getUserId(email))
+        } else {
+            ServiceResponse.Failed(
+                HttpStatusCode.BadRequest,
+                "Your login credentials don match an account in our system"
+            )
         }
     }
 }
