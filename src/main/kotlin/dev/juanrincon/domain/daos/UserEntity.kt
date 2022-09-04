@@ -18,7 +18,6 @@ class UserEntity(id: EntityID<Int>): IntEntity(id), DomainMapper<User> {
         firstName,
         lastName,
         imageUrl,
-        email,
-        ""
+        email
     )
 }

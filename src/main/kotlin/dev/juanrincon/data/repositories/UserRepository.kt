@@ -4,6 +4,7 @@ import dev.juanrincon.domain.daos.UserEntity
 import dev.juanrincon.domain.daos.UserTable
 import dev.juanrincon.domain.interfaces.UserDatabase
 import dev.juanrincon.domain.models.User
+import dev.juanrincon.domain.models.request.UserRequest
 import dev.juanrincon.plugins.dbQuery
 
 class UserRepository: UserDatabase {
@@ -35,7 +36,7 @@ class UserRepository: UserDatabase {
         } ?: false
     }
 
-    override suspend fun add(entry: User) = dbQuery {
+    override suspend fun add(entry: UserRequest) = dbQuery {
         val newUser = UserEntity.new {
             firstName = entry.firstName
             lastName = entry.lastName
@@ -46,14 +47,14 @@ class UserRepository: UserDatabase {
         newUser.toModel()
     }
 
-    override suspend fun update(entry: User) = dbQuery {
-        val user = UserEntity.findById(entry.id)
+    override suspend fun update(id: Int, entry: UserRequest) = dbQuery {
+        val user = UserEntity.findById(id)
         user?.let {
             it.firstName = entry.firstName
             it.lastName = entry.lastName
             it.imageUrl = entry.imageUrl
             it.email = entry.email
-            entry
+            it.toModel()
         }
     }
 }

@@ -2,8 +2,9 @@ package dev.juanrincon.domain.interfaces
 
 import dev.juanrincon.domain.interfaces.utilities.Repository
 import dev.juanrincon.domain.models.User
+import dev.juanrincon.domain.models.request.UserRequest
 
-interface UserDatabase: Repository<User> {
+interface UserDatabase: Repository<UserRequest, User> {
     suspend fun checkUserExists(email: String): Boolean
 
     suspend fun checkPasswordMatches(email: String, password: String): Boolean

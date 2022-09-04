@@ -12,7 +12,6 @@ class AreaEntity(id: EntityID<Int>): IntEntity(id), DomainMapper<Area> {
     var user by UserEntity referencedOn AreaTable.userId
     override fun toModel() = Area(
         id.value,
-        name,
-        user.id.value
+        name
     )
 }

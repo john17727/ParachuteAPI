@@ -4,7 +4,7 @@ import dev.juanrincon.data.services.UserService
 import dev.juanrincon.domain.generateToken
 import dev.juanrincon.domain.models.JwtDetails
 import dev.juanrincon.domain.models.request.LoginRequest
-import dev.juanrincon.domain.models.request.RegisterRequest
+import dev.juanrincon.domain.models.request.UserRequest
 import dev.juanrincon.domain.models.response.TokenResponse
 import dev.juanrincon.domain.models.response.UserPartialResponse
 import dev.juanrincon.domain.models.routing.UserRoute
@@ -19,7 +19,7 @@ import io.ktor.server.routing.*
 
 fun Route.userController(service: UserService, jwtDetails: JwtDetails) {
     post<UserRoute.Register> {
-        val user = call.receive<RegisterRequest>()
+        val user = call.receive<UserRequest>()
         when (val response = service.registerUser(user)) {
             is Success -> {
                 val tokenResponse = response.data.let {
