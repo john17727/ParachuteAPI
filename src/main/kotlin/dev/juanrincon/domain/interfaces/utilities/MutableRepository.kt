@@ -1,10 +1,10 @@
 package dev.juanrincon.domain.interfaces.utilities
 
-interface MutableRepository<M> {
+interface MutableRepository<M, E> {
 
     suspend fun delete(id: Int): Boolean
 
-    suspend fun add(entry: M): M
+    suspend fun add(entry: M): E
 
-    suspend fun  update(entry: M): M?
+    suspend fun  update(id: Int, entry: M): E?
 }

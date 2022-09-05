@@ -1,7 +1,10 @@
 package dev.juanrincon.plugins
 
+import dev.juanrincon.controllers.areaController
 import dev.juanrincon.controllers.userController
+import dev.juanrincon.data.repositories.AreaRepository
 import dev.juanrincon.data.repositories.UserRepository
+import dev.juanrincon.data.services.AreaService
 import dev.juanrincon.data.services.UserService
 import dev.juanrincon.domain.models.JwtDetails
 import io.ktor.server.routing.*
@@ -19,5 +22,6 @@ fun Application.configureRouting() {
                 this@configureRouting.environment.config.property("jwt.secret").getString()
             )
         )
+        areaController(AreaService(AreaRepository()))
     }
 }

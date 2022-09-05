@@ -2,13 +2,13 @@ package dev.juanrincon.data.services
 
 import dev.juanrincon.domain.interfaces.UserDatabase
 import dev.juanrincon.domain.models.User
-import dev.juanrincon.domain.models.request.RegisterRequest
+import dev.juanrincon.domain.models.request.UserRequest
 import dev.juanrincon.domain.models.utilities.ServiceResponse
 import io.ktor.http.*
 
 class UserService(private val repository: UserDatabase) {
 
-    suspend fun registerUser(request: RegisterRequest) : ServiceResponse<User> {
+    suspend fun registerUser(request: UserRequest) : ServiceResponse<User> {
         if (request.email.isEmpty() || request.password.isEmpty()) {
             return ServiceResponse.Failed(HttpStatusCode.BadRequest, "Missing Fields")
         }
@@ -17,7 +17,7 @@ class UserService(private val repository: UserDatabase) {
         return if (userExists) {
             ServiceResponse.Failed(HttpStatusCode.Conflict, "User with this email already exists")
         } else {
-            ServiceResponse.Success(repository.add(request.toModel()), HttpStatusCode.Created)
+            ServiceResponse.Success(repository.add(request), HttpStatusCode.Created)
         }
     }
 
