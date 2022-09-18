@@ -2,7 +2,6 @@ package dev.juanrincon.security.token
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import dev.juanrincon.domain.USER_ID
 import java.util.*
 
 class JwtTokenService : TokenService {

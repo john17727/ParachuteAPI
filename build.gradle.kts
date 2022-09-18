@@ -6,6 +6,7 @@ val exposedVersion: String by project
 val mysqlVersion: String by project
 val postgreVersion: String by project
 val hikaricpVersion: String by project
+val commonsCodecVersion: String by project
 
 plugins {
     application
@@ -48,6 +49,8 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
     implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
+
+    implementation("commons-codec:commons-codec:$commonsCodecVersion")
 
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
