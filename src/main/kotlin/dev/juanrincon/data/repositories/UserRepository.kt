@@ -13,8 +13,8 @@ class UserRepository: UserDatabase {
         !UserEntity.find { UserTable.email eq email }.empty()
     }
 
-    override suspend fun getSaltedHash(email: String): SaltedHash? {
-        return try {
+    override suspend fun getSaltedHash(email: String) = dbQuery {
+        try {
             val user = UserEntity.find { UserTable.email eq email}.first()
             SaltedHash(user.hash, user.salt)
         } catch (e: NoSuchElementException) {
@@ -44,7 +44,7 @@ class UserRepository: UserDatabase {
             imageUrl = entry.imageUrl
             email = entry.email
             hash = entry.hash
-            salt = salt
+            salt = entry.salt
         }
         newUser.toModel()
     }
