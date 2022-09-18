@@ -32,7 +32,7 @@ class UserService(private val repository: UserDatabase) {
         } else {
             ServiceResponse.Failed(
                 HttpStatusCode.BadRequest,
-                "Your login credentials don match an account in our system"
+                "Your login credentials don't match an account in our system"
             )
         }
     }
