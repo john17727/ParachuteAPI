@@ -1,6 +1,6 @@
 package dev.juanrincon.security.token
 
-data class TokenClaim(
+data class TokenIntClaim(
     val name: String,
-    val value: String
+    val value: Int
 )

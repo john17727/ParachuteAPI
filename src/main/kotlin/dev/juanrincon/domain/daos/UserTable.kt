@@ -7,5 +7,6 @@ object UserTable: IntIdTable("users") {
     val lastName = varchar("last_name", 32).nullable()
     val imageUrl = varchar("imageUrl", 250).nullable()
     val email = varchar("email", 64)
-    val password = varchar("password",  64)
+    val hash = varchar("password",  256)
+    val salt = varchar("salt", 64)
 }
