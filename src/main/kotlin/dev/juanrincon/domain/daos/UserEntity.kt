@@ -12,7 +12,8 @@ class UserEntity(id: EntityID<Int>): IntEntity(id), DomainMapper<User> {
     var lastName by UserTable.lastName
     var imageUrl by UserTable.imageUrl
     var email by UserTable.email
-    var password by UserTable.password
+    var hash by UserTable.hash
+    var salt by UserTable.salt
     override fun toModel() = User(
         id.value,
         firstName,

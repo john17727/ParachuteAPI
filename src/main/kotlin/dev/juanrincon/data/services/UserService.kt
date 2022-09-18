@@ -2,13 +2,18 @@ package dev.juanrincon.data.services
 
 import dev.juanrincon.domain.interfaces.UserDatabase
 import dev.juanrincon.domain.models.User
-import dev.juanrincon.domain.models.request.UserRequest
+import dev.juanrincon.domain.models.request.HashedUser
+import dev.juanrincon.domain.models.request.RegisterRequest
 import dev.juanrincon.domain.models.utilities.ServiceResponse
+import dev.juanrincon.security.hashing.HashingService
 import io.ktor.http.*
 
-class UserService(private val repository: UserDatabase) {
+class UserService(
+    private val repository: UserDatabase,
+    private val hashingService: HashingService
+) {
 
-    suspend fun registerUser(request: UserRequest) : ServiceResponse<User> {
+    suspend fun registerUser(request: RegisterRequest) : ServiceResponse<User> {
         if (request.email.isEmpty() || request.password.isEmpty()) {
             return ServiceResponse.Failed(HttpStatusCode.BadRequest, "Missing Fields")
         }
@@ -17,7 +22,16 @@ class UserService(private val repository: UserDatabase) {
         return if (userExists) {
             ServiceResponse.Failed(HttpStatusCode.Conflict, "User with this email already exists")
         } else {
-            ServiceResponse.Success(repository.add(request), HttpStatusCode.Created)
+            val saltedHash = hashingService.generateSaltedHash(request.password)
+            val hashedUser = HashedUser(
+                request.firstName,
+                request.lastName,
+                request.imageUrl,
+                request.email,
+                saltedHash.hash,
+                saltedHash.salt
+            )
+            ServiceResponse.Success(repository.add(hashedUser), HttpStatusCode.Created)
         }
     }
 
@@ -26,14 +40,18 @@ class UserService(private val repository: UserDatabase) {
             return ServiceResponse.Failed(HttpStatusCode.BadRequest, "Missing Fields")
         }
 
-        val passwordsMatch = repository.checkPasswordMatches(email, password)
-        return if (passwordsMatch) {
-            ServiceResponse.Success(repository.get(email))
-        } else {
-            ServiceResponse.Failed(
-                HttpStatusCode.BadRequest,
-                "Your login credentials don match an account in our system"
-            )
-        }
+        return repository.getSaltedHash(email)?.let { saltedHash ->
+            if (hashingService.verify(password, saltedHash)) {
+                ServiceResponse.Success(repository.get(email))
+            } else {
+                ServiceResponse.Failed(
+                    HttpStatusCode.BadRequest,
+                    "Your login credentials don't match an account in our system"
+                )
+            }
+        } ?: ServiceResponse.Failed(
+            HttpStatusCode.BadRequest,
+            "Your login credentials don't match an account in our system"
+        )
     }
 }
