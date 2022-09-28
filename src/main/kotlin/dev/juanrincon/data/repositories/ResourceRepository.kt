@@ -5,8 +5,6 @@ import dev.juanrincon.domain.daos.ResourceEntity
 import dev.juanrincon.domain.daos.ResourceTable
 import dev.juanrincon.domain.daos.UserEntity
 import dev.juanrincon.domain.interfaces.ResourceDatabase
-import dev.juanrincon.domain.interfaces.utilities.MutableRepository
-import dev.juanrincon.domain.models.Resource
 import dev.juanrincon.domain.models.request.ResourceRequest
 import dev.juanrincon.plugins.dbQuery
 

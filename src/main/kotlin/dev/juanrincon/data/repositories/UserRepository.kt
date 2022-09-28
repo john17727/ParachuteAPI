@@ -3,6 +3,7 @@ package dev.juanrincon.data.repositories
 import dev.juanrincon.domain.daos.UserEntity
 import dev.juanrincon.domain.daos.UserTable
 import dev.juanrincon.domain.interfaces.UserDatabase
+import dev.juanrincon.domain.models.User
 import dev.juanrincon.domain.models.request.HashedUser
 import dev.juanrincon.domain.models.request.RegisterRequest
 import dev.juanrincon.plugins.dbQuery
