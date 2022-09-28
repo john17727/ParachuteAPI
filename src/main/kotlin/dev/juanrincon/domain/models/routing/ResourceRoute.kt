@@ -4,7 +4,7 @@ import io.ktor.resources.*
 import kotlinx.serialization.Serializable
 
 @Serializable
-@Resource("/resource")
+@Resource("/resources")
 class ResourceRoute {
 
     @Serializable
