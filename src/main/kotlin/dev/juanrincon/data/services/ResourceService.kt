@@ -1,12 +1,12 @@
 package dev.juanrincon.data.services
 
-import dev.juanrincon.domain.interfaces.utilities.MutableRepository
+import dev.juanrincon.domain.interfaces.ResourceDatabase
 import dev.juanrincon.domain.models.Resource
 import dev.juanrincon.domain.models.request.ResourceRequest
 import dev.juanrincon.domain.models.utilities.ServiceResponse
 import io.ktor.http.*
 
-class ResourceService(private val repository: MutableRepository<ResourceRequest, Resource>) {
+class ResourceService(private val repository: ResourceDatabase) {
 
     suspend fun createResource(resourceRequest: ResourceRequest): ServiceResponse<Resource> {
         if (resourceRequest.name.isEmpty()) {
@@ -18,6 +18,10 @@ class ResourceService(private val repository: MutableRepository<ResourceRequest,
 
     suspend fun getUserResources(userId: Int): ServiceResponse<List<Resource>> {
         return ServiceResponse.Success(repository.getByUser(userId))
+    }
+
+    suspend fun getAreaResources(areaId: Int): ServiceResponse<List<Resource>> {
+        return ServiceResponse.Success(repository.getByArea(areaId))
     }
 
     suspend fun updateResource(id: Int, resourceRequest: ResourceRequest): ServiceResponse<Resource> {

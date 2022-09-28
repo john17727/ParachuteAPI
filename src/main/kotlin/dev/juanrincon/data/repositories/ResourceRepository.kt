@@ -4,12 +4,17 @@ import dev.juanrincon.domain.daos.AreaEntity
 import dev.juanrincon.domain.daos.ResourceEntity
 import dev.juanrincon.domain.daos.ResourceTable
 import dev.juanrincon.domain.daos.UserEntity
+import dev.juanrincon.domain.interfaces.ResourceDatabase
 import dev.juanrincon.domain.interfaces.utilities.MutableRepository
 import dev.juanrincon.domain.models.Resource
 import dev.juanrincon.domain.models.request.ResourceRequest
 import dev.juanrincon.plugins.dbQuery
 
-class ResourceRepository: MutableRepository<ResourceRequest, Resource> {
+class ResourceRepository: ResourceDatabase {
+    override suspend fun getByArea(areaId: Int) = dbQuery {
+        ResourceEntity.find { ResourceTable.areaId eq areaId }.map { it.toModel() }
+    }
+
     override suspend fun getByUser(userId: Int) = dbQuery {
         ResourceEntity.find { ResourceTable.userId eq userId }.map { it.toModel() }
     }
