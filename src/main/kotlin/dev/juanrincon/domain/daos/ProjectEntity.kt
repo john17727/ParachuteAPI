@@ -8,6 +8,6 @@ class ProjectEntity(id: EntityID<Int>): IntEntity(id) {
     companion object : IntEntityClass<ProjectEntity>(ProjectTable)
     var name by ProjectTable.name
     var status by ProjectStatusEntity referencedOn ProjectTable.statusId
-    var area by AreaEntity referencedOn ResourceTable.areaId
-    var user by UserEntity referencedOn ResourceTable.userId
+    var area by AreaEntity referencedOn  ProjectTable.areaId
+    var user by UserEntity referencedOn ProjectTable.userId
 }
