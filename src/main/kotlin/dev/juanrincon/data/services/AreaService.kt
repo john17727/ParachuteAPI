@@ -1,12 +1,12 @@
 package dev.juanrincon.data.services
 
-import dev.juanrincon.domain.interfaces.AreaDatabase
+import dev.juanrincon.domain.interfaces.utilities.MutableRepository
 import dev.juanrincon.domain.models.Area
 import dev.juanrincon.domain.models.request.AreaRequest
 import dev.juanrincon.domain.models.utilities.ServiceResponse
 import io.ktor.http.*
 
-class AreaService(private val repository: AreaDatabase) {
+class AreaService(private val repository: MutableRepository<AreaRequest, Area>) {
 
     suspend fun createArea(areaRequest: AreaRequest): ServiceResponse<Area> {
         if (areaRequest.name.isEmpty()) {

@@ -1,6 +1,10 @@
 package dev.juanrincon.domain.interfaces.utilities
 
+import dev.juanrincon.domain.models.Task
+
 interface MutableRepository<I, O> {
+
+    suspend fun getByUser(userId: Int): List<O>
 
     suspend fun delete(id: Int): Boolean
 
