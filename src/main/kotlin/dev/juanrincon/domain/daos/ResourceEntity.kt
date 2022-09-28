@@ -15,6 +15,6 @@ class ResourceEntity(id: EntityID<Int>): IntEntity(id), DomainMapper<Resource> {
     override fun toModel() = Resource(
         id.value,
         name,
-        area.id.value
+        area?.id?.value
     )
 }
