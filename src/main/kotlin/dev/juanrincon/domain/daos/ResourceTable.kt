@@ -4,6 +4,6 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 
 object ResourceTable: IntIdTable("resources") {
     val name = varchar("name", 256)
-    val areaId = reference("area_id", AreaTable)
+    val areaId = reference("area_id", AreaTable).nullable()
     val userId = reference("user_id", UserTable)
 }

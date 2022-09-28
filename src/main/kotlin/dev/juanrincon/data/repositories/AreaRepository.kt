@@ -21,20 +21,16 @@ class AreaRepository: MutableRepository<AreaRequest, Area> {
     }
 
     override suspend fun update(id: Int, entry: AreaRequest) = dbQuery {
-        val area = AreaEntity.findById(id)
-
-        area?.let {
+        AreaEntity.findById(id)?.let {
             it.name = entry.name
             it.toModel()
         }
     }
 
     override suspend fun add(entry: AreaRequest) = dbQuery {
-        val currentUser = UserEntity.findById(entry.userId)
-        val newArea = AreaEntity.new {
+        AreaEntity.new {
             name = entry.name
-            user = currentUser!!
-        }
-        newArea.toModel()
+            user = UserEntity.findById(entry.userId)!!
+        }.toModel()
     }
 }
