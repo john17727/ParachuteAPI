@@ -7,9 +7,6 @@ import dev.juanrincon.domain.daos.UserEntity
 import dev.juanrincon.domain.interfaces.ResourceDatabase
 import dev.juanrincon.domain.models.request.ResourceRequest
 import dev.juanrincon.plugins.dbQuery
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.select
 
 class ResourceRepository: ResourceDatabase {
     override suspend fun getByArea(areaId: Int, userId: Int) = dbQuery {
@@ -34,7 +31,7 @@ class ResourceRepository: ResourceDatabase {
     override suspend fun update(id: Int, entry: ResourceRequest) = dbQuery {
         ResourceEntity.findById(id)?.let {
             it.name = entry.name
-            it.area = getResourceArea(entry.areaId)
+            it.area = getArea(entry.areaId)
             it.toModel()
         }
     }
@@ -42,12 +39,14 @@ class ResourceRepository: ResourceDatabase {
     override suspend fun add(entry: ResourceRequest) = dbQuery {
         ResourceEntity.new {
             name = entry.name
-            area = getResourceArea(entry.areaId)
-            user = UserEntity.findById(entry.userId)!!
+            area = getArea(entry.areaId)
+            user = getUser(entry.userId)
         }.toModel()
     }
 
-    private fun getResourceArea(id: Int?) = id?.let {
+    private fun getArea(id: Int?) = id?.let {
         AreaEntity.findById(it)
     }
+
+    private fun getUser(id: Int) = UserEntity.findById(id)!!
 }
