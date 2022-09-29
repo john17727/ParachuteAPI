@@ -20,8 +20,12 @@ class ResourceService(private val repository: ResourceDatabase) {
         return ServiceResponse.Success(repository.getByUser(userId))
     }
 
-    suspend fun getAreaResources(areaId: Int): ServiceResponse<List<Resource>> {
-        return ServiceResponse.Success(repository.getByArea(areaId))
+    suspend fun getAreaResources(areaId: Int, userId: Int): ServiceResponse<List<Resource>> {
+        val resources = repository.getByArea(areaId, userId)
+        if (resources.isEmpty()) {
+            return ServiceResponse.Failed("Area has no resources", HttpStatusCode.NotFound)
+        }
+        return ServiceResponse.Success(resources)
     }
 
     suspend fun updateResource(id: Int, resourceRequest: ResourceRequest): ServiceResponse<Resource> {

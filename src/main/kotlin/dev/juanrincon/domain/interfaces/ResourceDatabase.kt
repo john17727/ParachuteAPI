@@ -7,5 +7,5 @@ import dev.juanrincon.domain.models.request.ResourceRequest
 
 interface ResourceDatabase: MutableRepository<ResourceRequest, Resource>, ByUserRepository<Resource> {
 
-    suspend fun getByArea(areaId: Int): List<Resource>
+    suspend fun getByArea(areaId: Int, userId: Int): List<Resource>
 }

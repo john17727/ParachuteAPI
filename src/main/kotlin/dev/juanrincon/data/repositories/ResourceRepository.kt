@@ -7,10 +7,17 @@ import dev.juanrincon.domain.daos.UserEntity
 import dev.juanrincon.domain.interfaces.ResourceDatabase
 import dev.juanrincon.domain.models.request.ResourceRequest
 import dev.juanrincon.plugins.dbQuery
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.and
+import org.jetbrains.exposed.sql.select
 
 class ResourceRepository: ResourceDatabase {
-    override suspend fun getByArea(areaId: Int) = dbQuery {
-        ResourceEntity.find { ResourceTable.areaId eq areaId }.map { it.toModel() }
+    override suspend fun getByArea(areaId: Int, userId: Int) = dbQuery {
+        if (areaId < 1) {
+            ResourceEntity.find { ResourceTable.userId eq userId }.filter { it.area == null }.map { it.toModel() }
+        } else {
+            ResourceEntity.find { ResourceTable.areaId eq areaId }.map { it.toModel() }
+        }
     }
 
     override suspend fun getByUser(userId: Int) = dbQuery {

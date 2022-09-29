@@ -7,6 +7,7 @@ import dev.juanrincon.domain.models.routing.ResourceRoute
 import dev.juanrincon.domain.models.utilities.ApiResponse
 import dev.juanrincon.domain.models.utilities.ServiceResponse.Failed
 import dev.juanrincon.domain.models.utilities.ServiceResponse.Success
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
@@ -32,9 +33,23 @@ fun Route.resourceController(service: ResourceService) {
 
         get<ResourceRoute> {
             val userId = call.principal<JWTPrincipal>()!!.payload.getClaim(USER_ID).asInt()
-            when (val response = service.getUserResources(userId)) {
-                is Success -> call.respond(response.status, ApiResponse.success(response.data))
-                is Failed -> call.respond(response.status, ApiResponse.fail(response.message))
+            val area = call.request.queryParameters["area"]
+
+            if (area.isNullOrEmpty()) {
+                when (val response = service.getUserResources(userId)) {
+                    is Success -> call.respond(response.status, ApiResponse.success(response.data))
+                    is Failed -> call.respond(response.status, ApiResponse.fail(response.message))
+                }
+            } else {
+                try {
+                    val areaId = area.toInt()
+                    when (val response = service.getAreaResources(areaId, userId)) {
+                        is Success -> call.respond(response.status, ApiResponse.success(response.data))
+                        is Failed -> call.respond(response.status, ApiResponse.fail(response.message))
+                    }
+                } catch (e: NumberFormatException) {
+                    call.respond(HttpStatusCode.BadRequest, ApiResponse.fail("Area parameter must be a number"))
+                }
             }
         }
 
