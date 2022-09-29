@@ -15,12 +15,12 @@ class UserService(
 
     suspend fun registerUser(request: RegisterRequest) : ServiceResponse<User> {
         if (request.email.isEmpty() || request.password.isEmpty()) {
-            return ServiceResponse.Failed(HttpStatusCode.BadRequest, "Missing Fields")
+            return ServiceResponse.Failed("Missing Fields", HttpStatusCode.BadRequest)
         }
 
         val userExists = repository.checkUserExists(request.email)
         return if (userExists) {
-            ServiceResponse.Failed(HttpStatusCode.Conflict, "User with this email already exists")
+            ServiceResponse.Failed("User with this email already exists", HttpStatusCode.Conflict)
         } else {
             val saltedHash = hashingService.generateSaltedHash(request.password)
             val hashedUser = HashedUser(
@@ -37,7 +37,7 @@ class UserService(
 
     suspend fun loginUser(email: String, password: String) : ServiceResponse<User> {
         if (email.isEmpty() || password.isEmpty()) {
-            return ServiceResponse.Failed(HttpStatusCode.BadRequest, "Missing Fields")
+            return ServiceResponse.Failed("Missing Fields", HttpStatusCode.BadRequest)
         }
 
         return repository.getSaltedHash(email)?.let { saltedHash ->
@@ -45,13 +45,13 @@ class UserService(
                 ServiceResponse.Success(repository.get(email))
             } else {
                 ServiceResponse.Failed(
-                    HttpStatusCode.BadRequest,
-                    "Your login credentials don't match an account in our system"
+                    "Your login credentials don't match an account in our system",
+                    HttpStatusCode.BadRequest
                 )
             }
         } ?: ServiceResponse.Failed(
-            HttpStatusCode.BadRequest,
-            "Your login credentials don't match an account in our system"
+            "Your login credentials don't match an account in our system",
+            HttpStatusCode.BadRequest
         )
     }
 }

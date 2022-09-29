@@ -13,6 +13,6 @@ class TaskEntity(id: EntityID<Int>): IntEntity(id) {
     var dueDate by TaskTable.dueDate
     var priority by PriorityLevelEntity referencedOn TaskTable.priorityId
     var parentTask by TaskEntity referencedOn TaskTable.parentTaskId
-    var project by ProjectEntity referencedOn TaskTable.projectId
+    var project by ProjectEntity optionalReferencedOn  TaskTable.projectId
     var user by UserEntity referencedOn TaskTable.userId
 }
