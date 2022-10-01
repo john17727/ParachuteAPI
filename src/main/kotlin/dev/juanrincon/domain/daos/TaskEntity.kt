@@ -14,7 +14,7 @@ class TaskEntity(id: EntityID<Int>): IntEntity(id), DomainMapper<Task> {
     var status by TaskStatusEntity referencedOn TaskTable.statusId
     var dueDate by TaskTable.dueDate
     var priority by PriorityLevelEntity referencedOn TaskTable.priorityId
-    var parentTask by TaskEntity referencedOn TaskTable.parentTaskId
+    var parentTask by TaskEntity optionalReferencedOn TaskTable.parentTaskId
     var project by ProjectEntity optionalReferencedOn  TaskTable.projectId
     var user by UserEntity referencedOn TaskTable.userId
 
@@ -26,7 +26,7 @@ class TaskEntity(id: EntityID<Int>): IntEntity(id), DomainMapper<Task> {
         status.id.value,
         dueDate.toString(),
         priority.id.value,
-        parentTask.id.value,
+        parentTask?.id?.value,
         project?.id?.value
     )
 }
