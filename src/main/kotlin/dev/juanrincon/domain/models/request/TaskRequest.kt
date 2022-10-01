@@ -8,6 +8,6 @@ data class TaskRequest(
     val dueDate: String?,
     val priority: Int,
     val parentTask: Int?,
-    val projectId: Int?,
-    val userId: Int
+    val project: Int?,
+    var userId: Int
 )

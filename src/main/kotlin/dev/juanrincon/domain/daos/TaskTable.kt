@@ -10,7 +10,7 @@ object TaskTable: IntIdTable("tasks") {
     val statusId = reference("status_id", TaskStatusTable)
     val dueDate = datetime("due_date").nullable()
     val priorityId = reference("priority_id", PriorityLevelTable)
-    val parentTaskId = reference("parent_task_id", TaskTable)
+    val parentTaskId = reference("parent_task_id", TaskTable).nullable()
     val projectId = reference("projectId", ProjectTable).nullable()
     val userId = reference("user_id", UserTable)
 }
