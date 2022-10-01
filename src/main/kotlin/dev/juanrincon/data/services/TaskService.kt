@@ -9,7 +9,7 @@ import io.ktor.http.*
 class TaskService(private val repository: TaskDatabase) {
 
     suspend fun createTask(taskRequest: TaskRequest): ServiceResponse<Task> {
-        if (taskRequest.title.isEmpty() || taskRequest.markdown.isEmpty() || taskRequest.html.isEmpty()) {
+        if (taskRequest.title.isEmpty()) {
             return ServiceResponse.Failed("Missing Fields", HttpStatusCode.BadRequest)
         }
 
@@ -29,7 +29,7 @@ class TaskService(private val repository: TaskDatabase) {
     }
 
     suspend fun updateTask(id: Int, taskRequest: TaskRequest): ServiceResponse<Task> {
-        if (taskRequest.title.isEmpty() || taskRequest.markdown.isEmpty() || taskRequest.html.isEmpty()) {
+        if (taskRequest.title.isEmpty()) {
             return ServiceResponse.Failed("Missing Fields", HttpStatusCode.BadRequest)
         }
 
