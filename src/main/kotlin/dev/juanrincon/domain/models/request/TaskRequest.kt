@@ -9,5 +9,5 @@ data class TaskRequest(
     val priority: Int,
     val parentTask: Int?,
     val project: Int?,
-    val userId: Int
+    var userId: Int
 )
