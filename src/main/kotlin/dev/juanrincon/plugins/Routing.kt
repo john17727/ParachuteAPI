@@ -1,17 +1,8 @@
 package dev.juanrincon.plugins
 
-import dev.juanrincon.controllers.areaController
-import dev.juanrincon.controllers.resourceController
-import dev.juanrincon.controllers.taskController
-import dev.juanrincon.controllers.userController
-import dev.juanrincon.data.repositories.AreaRepository
-import dev.juanrincon.data.repositories.ResourceRepository
-import dev.juanrincon.data.repositories.TaskRepository
-import dev.juanrincon.data.repositories.UserRepository
-import dev.juanrincon.data.services.AreaService
-import dev.juanrincon.data.services.ResourceService
-import dev.juanrincon.data.services.TaskService
-import dev.juanrincon.data.services.UserService
+import dev.juanrincon.controllers.*
+import dev.juanrincon.data.repositories.*
+import dev.juanrincon.data.services.*
 import dev.juanrincon.domain.models.JwtDetails
 import dev.juanrincon.security.hashing.SHA256HashingService
 import dev.juanrincon.security.token.JwtTokenService
@@ -36,5 +27,6 @@ fun Application.configureRouting() {
         areaController(AreaService(AreaRepository()))
         resourceController(ResourceService(ResourceRepository()))
         taskController(TaskService(TaskRepository()))
+        noteController(NoteService(NoteRepository()))
     }
 }

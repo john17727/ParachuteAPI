@@ -6,6 +6,7 @@ import org.jetbrains.exposed.dao.id.EntityID
 
 class ArchivedNoteEntity(id: EntityID<Int>): IntEntity(id) {
     companion object : IntEntityClass<ArchivedNoteEntity>(ArchivedNoteTable)
+    var noteId by ArchivedNoteTable.noteId
     var title by ArchivedNoteTable.title
     var markdown by ArchivedNoteTable.markdown
     var html by ArchivedNoteTable.html

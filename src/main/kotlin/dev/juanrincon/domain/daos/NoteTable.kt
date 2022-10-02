@@ -9,8 +9,8 @@ object NoteTable: IntIdTable("notes") {
     val typeId = reference("type_id", NoteTypeTable)
     val favorite = bool("favorite")
     val fleeting = bool("fleeting")
-    val projectId = reference("projectId", ProjectTable)
-    val resourceId = reference("resource_id", ResourceTable)
-    val areaId = reference("area_id", AreaTable)
+    val projectId = reference("projectId", ProjectTable).nullable()
+    val resourceId = reference("resource_id", ResourceTable).nullable()
+    val areaId = reference("area_id", AreaTable).nullable()
     val userId = reference("user_id", UserTable)
 }
