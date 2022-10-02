@@ -13,7 +13,7 @@ class UserService(
     private val hashingService: HashingService
 ) {
 
-    suspend fun registerUser(request: RegisterRequest) : ServiceResponse<User> {
+    suspend fun registerUser(request: RegisterRequest): ServiceResponse<User> {
         if (request.email.isEmpty() || request.password.isEmpty()) {
             return ServiceResponse.Failed("Missing Fields", HttpStatusCode.BadRequest)
         }
@@ -35,7 +35,7 @@ class UserService(
         }
     }
 
-    suspend fun loginUser(email: String, password: String) : ServiceResponse<User> {
+    suspend fun loginUser(email: String, password: String): ServiceResponse<User> {
         if (email.isEmpty() || password.isEmpty()) {
             return ServiceResponse.Failed("Missing Fields", HttpStatusCode.BadRequest)
         }
