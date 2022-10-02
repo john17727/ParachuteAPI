@@ -53,7 +53,7 @@ fun Route.resourceController(service: ResourceService) {
             }
         }
 
-        put<ResourceRoute.Id> {parameters ->
+        put<ResourceRoute.Id> { parameters ->
             val resourceRequest = call.receive<ResourceRequest>()
             resourceRequest.userId = call.principal<JWTPrincipal>()!!.payload.getClaim(USER_ID).asInt()
             when (val response = service.updateResource(parameters.id, resourceRequest)) {

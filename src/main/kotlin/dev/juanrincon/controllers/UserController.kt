@@ -36,6 +36,7 @@ fun Route.userController(
                 }
                 call.respond(response.status, ApiResponse.success(tokenResponse))
             }
+
             is Failed -> call.respond(response.status, ApiResponse.fail(response.message))
         }
     }
@@ -52,6 +53,7 @@ fun Route.userController(
                 }
                 call.respond(response.status, ApiResponse.success(tokenResponse))
             }
+
             is Failed -> call.respond(response.status, ApiResponse.fail(response.message))
         }
     }
