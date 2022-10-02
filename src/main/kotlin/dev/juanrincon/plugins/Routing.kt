@@ -28,5 +28,6 @@ fun Application.configureRouting() {
         resourceController(ResourceService(ResourceRepository()))
         taskController(TaskService(TaskRepository()))
         noteController(NoteService(NoteRepository()))
+        utilityController(UtilityService(UtilityRepository()))
     }
 }
