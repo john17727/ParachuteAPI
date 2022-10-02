@@ -36,7 +36,7 @@ class NoteService(private val repository: NotesDatabase) {
         if (noteRequest.title.isEmpty()) {
             return ServiceResponse.Failed("Missing Fields", HttpStatusCode.BadRequest)
         }
-        
+
         return repository.update(id, noteRequest)?.let {
             ServiceResponse.Success(it)
         } ?: ServiceResponse.Failed("Note was not found", HttpStatusCode.NotFound)
@@ -47,6 +47,14 @@ class NoteService(private val repository: NotesDatabase) {
             ServiceResponse.Success(true)
         } else {
             ServiceResponse.Failed("Failed to delete note", HttpStatusCode.NotFound)
+        }
+    }
+
+    suspend fun archiveNote(id: Int): ServiceResponse<Boolean> {
+        return if (repository.archive(id)) {
+            ServiceResponse.Success(true)
+        } else {
+            ServiceResponse.Failed("Failed to archive note", HttpStatusCode.NotFound)
         }
     }
 }

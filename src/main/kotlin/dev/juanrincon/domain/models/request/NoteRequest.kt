@@ -10,5 +10,5 @@ data class NoteRequest(
     val projectId: Int?,
     val resourceId: Int?,
     val areaId: Int?,
-    val userId: Int
+    var userId: Int
 )
