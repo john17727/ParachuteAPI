@@ -13,8 +13,8 @@ class ArchivedNoteEntity(id: EntityID<Int>): IntEntity(id) {
     var type by NoteTypeEntity referencedOn ArchivedNoteTable.typeId
     var favorite by ArchivedNoteTable.favorite
     var fleeting by ArchivedNoteTable.fleeting
-    var project by ProjectEntity referencedOn ArchivedNoteTable.projectId
-    var resource by ResourceEntity referencedOn ArchivedNoteTable.resourceId
-    var area by AreaEntity referencedOn ArchivedNoteTable.areaId
+    var project by ProjectEntity optionalReferencedOn  ArchivedNoteTable.projectId
+    var resource by ResourceEntity optionalReferencedOn ArchivedNoteTable.resourceId
+    var area by AreaEntity optionalReferencedOn ArchivedNoteTable.areaId
     var user by UserEntity referencedOn ArchivedNoteTable.userId
 }
